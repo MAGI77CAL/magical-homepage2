@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Magical - 감성 콘텐츠 기업</title>
+  <link href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css" rel="stylesheet" />
+  <style>
+    * { box-sizing: border-box; }
+    html, body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Pretendard', sans-serif;
+      background-color: #000;
+      color: #fff;
+    }
+    header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      background-color: rgba(0, 0, 0, 0.85);
+      padding: 1rem 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      z-index: 1000;
+    }
+    header h1 {
+      margin: 0;
+      font-size: 1.5rem;
+      color: #fff;
+      cursor: pointer;
+    }
+    nav {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+      align-items: center;
+      position: relative;
+    }
+    nav a, nav span {
+      color: #f9c86c;
+      font-weight: bold;
+      text-decoration: none;
+      cursor: pointer;
+    }
+    .dropdown {
+      position: absolute;
+      top: 2.5rem;
+      background: rgba(0, 0, 0, 0.95);
+      border: 1px solid #f9c86c;
+      border-radius: 0.5rem;
+      display: none;
+      flex-direction: column;
+      padding: 0.5rem 1rem;
+    }
+    .dropdown a {
+      margin: 0.25rem 0;
+    }
+    .dropdown.show {
+      display: flex;
+    }
+    .section {
+      position: relative;
+      height: 100vh;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 2rem;
+    }
+    .section.active {
+      display: flex;
+    }
+    .section video,
+    .section img {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      top: 0;
+      left: 0;
+      z-index: -1;
+    }
+    .overlay {
+      background: rgba(0, 0, 0, 0.6);
+      padding: 3rem 2rem;
+      border-radius: 1rem;
+      max-width: 700px;
+      width: 100%;
+      color: #fff;
+    }
+    .overlay h1, .overlay h2, .overlay p {
+      color: #fff;
+    }
+    .overlay h1 {
+      font-size: 2.2rem;
+      margin-bottom: 1rem;
+    }
+    .overlay h2 {
+      font-size: 1.5rem;
+      margin-bottom: 1.5rem;
+    }
+    .overlay p {
+      font-size: 1.1rem;
+      margin-bottom: 2rem;
+    }
+    .project-button {
+      background: #f9c86c;
+      color: #000;
+      padding: 1rem 2rem;
+      border-radius: 2rem;
+      font-weight: bold;
+      font-size: 1.05rem;
+      border: none;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+    .project-button:hover {
+      background: #f3b436;
+    }
+    .project-lines {
+      position: relative;
+      margin-top: 1rem;
+      font-size: 1.2rem;
+      font-weight: bold;
+      color: #f9c86c;
+    }
+    .project-lines::before,
+    .project-lines::after {
+      content: '';
+      position: absolute;
+      width: 2px;
+      height: 40px;
+      background: #f9c86c;
+    }
+    .project-lines::before {
+      left: -120px;
+      top: 25px;
+    }
+    .project-lines::after {
+      right: -120px;
+      top: 25px;
+    }
+    .back-button {
+      margin-top: 1.5rem;
+      background: transparent;
+      color: #f9c86c;
+      border: 2px solid #f9c86c;
+      border-radius: 1.5rem;
+      padding: 0.5rem 1rem;
+      font-weight: bold;
+      cursor: pointer;
+    }
+    .back-button:hover {
+      background: #f9c86c;
+      color: #000;
+    }
+    @media (max-width: 768px) {
+  header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  nav {
+    margin-top: 0.5rem;
+    flex-direction: column;
+    gap: 0.5rem;
+    width: 100%;
+  }
+  nav a, nav span {
+    font-size: 1rem;
+  }
+  .overlay {
+    padding: 2rem 1rem;
+  }
+  .overlay h1 {
+    font-size: 1.8rem;
+  }
+  .overlay h2 {
+    font-size: 1.3rem;
+  }
+  .overlay p {
+    font-size: 1rem;
+  }
+  .project-button {
+    width: 100%;
+    margin-bottom: 0.75rem;
+    font-size: 1rem;
+  }
+  .back-button {
+    width: 100%;
+    font-size: 1rem;
+    padding: 0.6rem 1rem;
+  }
+  .project-lines::before,
+  .project-lines::after {
+    display: none;
+  }
+  footer div {
+    flex-direction: column;
+    gap: 0.3rem;
+    font-size: 0.9rem;
+  }
+}
+
+  </style>
+</head>
+<body>
+    <div id="intro-screen" style="
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  background-color: #000;
+  color: #f9c86c;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Pretendard', sans-serif;
+  font-size: 2rem;
+  z-index: 2000;
+  transition: opacity 1s ease;
+">
+  <h1 style="margin: 0; font-size: 2.5rem;">Magical</h1>
+  <p style="font-size: 1.2rem; margin-top: 1rem;">사람과 감성을 잇는 콘텐츠 기업</p>
+</div>
+
+  <header>
+    <h1 onclick="showSection('home')">Magical</h1>
+
+    <nav>
+        <a onclick="showSection('home')">Home</a>
+        <span onclick="toggleDropdown()">프로젝트 ▾</span>
+      <div id="projectDropdown" class="dropdown">
+        <a onclick="showSection('volunteer')">황금손 봉사단</a>
+        <a onclick="showSection('taste')">Taste Spot</a>
+        <a onclick="showSection('moment')">Magical Moment</a>
+    </div>
+    
+      
+      <a onclick="showSection('ceo')">CEO 인사말</a>
+      <a onclick="showSection('about')">회사 소개</a>
+      <a onclick="showSection('news')">소식</a>
+
+      <a onclick="showSection('contact')">문의하기</a>
+      
+
+
+      </div>
+    </nav>
+  </header>
+
+  <section class="section active" id="home">
+    <video autoplay muted loop playsinline>
+      <source src="https://cdn.pixabay.com/video/2023/11/01/185645-884765382_large.mp4" type="video/mp4" />
+    </video>
+    <div class="overlay">
+      <h1>Magical은</h1>
+      <h2>콘텐츠 그 너머의 가치를 지향하는 기업입니다.</h2>
+      <p>우리는 감성, 사람, 그리고 진심을 연결합니다.</p>
+      <p class="project-lines">PROJECTS</p>
+      <div style="display: flex; justify-content: center; gap: 1rem; flex-wrap: wrap; margin-top: 3rem;">
+        <button class="project-button" onclick="showSection('volunteer')">황금손 봉사단 </button>
+        <button class="project-button" onclick="showSection('taste')">Taste Spot </button>
+        <button class="project-button" onclick="showSection('moment')">Magical Moment </button>
+      </div>
+    </div>
+  </section>
+  <section class="section active" id="volunteer">
+    <img src="https://cdn.pixabay.com/photo/2017/02/01/22/02/volunteers-2031390_1280.jpg" />
+    <div class="overlay">
+      <h2>🤲 황금손 봉사단</h2>
+      <p>말보다 행동으로. 콘텐츠보다 손길로.<br />
+      세상에 따뜻한 자국을 남기는 봉사 콘텐츠 프로젝트입니다.</p>
+      <p>지역 아동센터, 유기동물 보호소, 독거 어르신 가정 등 다양한 곳에서 자발적인 손길로 도움을 전하며 콘텐츠로 기록합니다.</p>
+      <p>봉사자는 누구든 참여할 수 있으며, 활동은 진심을 담아 사회에 긍정적인 변화를 만들어갑니다.</p>
+      <a class="insta-link" href="https://www.instagram.com/golden77hand" target="_blank">📸 활동 보기 (@golden77hand)</a>
+      <br />
+      <button class="back-button" onclick="showSection('home')">← 돌아가기</button>
+    </div>
+  </section>
+
+  <section class="section" id="taste">
+    <img src="https://cdn.pixabay.com/photo/2020/02/24/06/38/korean-food-4875801_1280.jpg" />
+    <div class="overlay">
+      <h2>Taste Spot</h2>
+      <p>맛과 감성, 사람을 잇는 콘텐츠 생태계의 시작.<br />
+      리뷰, 예약, 지도, 360도 콘텐츠까지 담아 특별한 식경험을 제공합니다.</p>
+      <a class="insta-link" href="https://www.instagram.com/taste77spot" target="_blank">📸 활동 보기 (@taste77spot)</a>
+      <br />
+      <button class="back-button" onclick="showSection('home')">← 돌아가기</button>
+    </div>
+  </section>
+  <section class="section" id="moment">
+    <img src="https://cdn.pixabay.com/photo/2016/11/29/03/53/woman-1867093_1280.jpg" />
+    <div class="overlay">
+      <h2>Magical Moment</h2>
+      <p>표정과 삶의 태도를 담은 진심 콘텐츠.<br />
+      사람의 마음을 움직이는 이야기를 수집하고 기록합니다.</p>
+      <a class="insta-link" href="https://www.instagram.com/magical77moment" target="_blank">📸 활동 보기 (@magical77moment)</a>
+      <br />
+      <button class="back-button" onclick="showSection('home')">← 돌아가기</button>
+    </div>
+  </section>
+
+  <section class="section" id="ceo">
+    <img src="https://cdn.pixabay.com/photo/2016/11/22/21/42/buildings-1850129_1280.jpg" />
+    <div class="overlay">
+      <h2>CEO 인사말</h2>
+      <p>메지컬은 ‘사람’과 ‘감성’을 중심에 둔 콘텐츠 기업입니다.<br />
+      콘텐츠 그 너머의 가치를 고민하며, 진심으로 연결되는 세상을 만들고자 시작했습니다.</p>
+      <p><strong>“성장보다 공감, 속도보다 진심”</strong><br />
+      사람을 먼저 생각하는 콘텐츠로 사회에 따뜻한 영향을 전하겠습니다.</p>
+      <p>Magical 대표 이지훈 드림</p>
+      <button class="back-button" onclick="showSection('home')">← 돌아가기</button>
+    </div>
+  </section>
+  <section class="section" id="about">
+    <img src="https://images.unsplash.com/photo-1521737604893-d14cc237f11d?auto=format&fit=crop&w=1280&q=80" />
+    <div class="overlay">
+      <h2>회사 소개</h2>
+      <p><strong>Magical</strong>은 감성과 진심을 바탕으로 사람과 사람, 사람과 사회를 연결하는 콘텐츠 기업입니다.</p>
+      <p>우리는 콘텐츠 그 자체보다, 콘텐츠가 만들어내는 연결과 공감의 가치를 중요하게 생각합니다.</p>
+      <p>브랜드의 비전은 단순한 볼거리를 넘어 <strong>삶의 깊이와 따뜻함을 전하는 것</strong>입니다.</p>
+      <ul style="text-align: left; padding-left: 1.5rem;">
+        <li>🌱 사람 중심 철학</li>
+        <li>💛 따뜻한 감성 콘텐츠</li>
+        <li>🤝 사회와 연결되는 실천</li>
+      </ul>
+      <p style="margin-top: 1rem;">함께 만드는 따뜻한 변화, 그것이 Magical의 시작입니다.</p>
+      <button class="back-button" onclick="showSection('home')">← 돌아가기</button>
+    </div>
+  </section>
+  <section class="section" id="contact">
+    <img src="https://images.unsplash.com/photo-1581090700227-1e8b1c1f8d1f?auto=format&fit=crop&w=1280&q=80" />
+    <div class="overlay">
+      <h2>📮 문의하기</h2>
+      <p>궁금한 점이나 협업 제안이 있다면 언제든지 편하게 연락주세요.</p>
+      <p><strong>이메일</strong>: <a href="mailto:comeonjh@gmail.com" style="color: #f9c86c;">comeonjh@gmail.com</a></p>
+      <p><strong>인스타그램 DM</strong>: <a href="https://www.instagram.com/golden77hand" target="_blank" style="color: #f9c86c;">@golden77hand</a></p>
+      <p><strong>위치</strong>: 경기도 김포시 (예시)</p>
+      <button class="back-button" onclick="showSection('home')">← 돌아가기</button>
+    </div>
+  </section>
+  <section class="section" id="news">
+    <img src="https://images.unsplash.com/photo-1551836022-d5d88e9218df?auto=format&fit=crop&w=1280&q=80" />
+    <div class="overlay">
+      <h2>📰 최근 소식</h2>
+      <ul style="text-align: left; padding-left: 1.5rem; font-size: 1rem;">
+        <li><strong>[2025.05.03]</strong> Magical 공식 홈페이지 시범 오픈 🎉</li>
+        <li><strong>[2025.04.30]</strong> 황금손 봉사단 김포 유기동물 보호소 방문 진행 🐶</li>
+        <li><strong>[2025.04.15]</strong> Taste Spot 기능 업데이트: 리뷰, 예약, 360도 보기 추가 ✅</li>
+        <li><strong>[2025.03.20]</strong> Magical Moment 첫 인터뷰 촬영 시작 🎥</li>
+      </ul>
+      <button class="back-button" onclick="showSection('home')">← 돌아가기</button>
+    </div>
+  </section>
+  
+  
+  
+  <script>
+    const sections = document.querySelectorAll('.section');
+    function showSection(id) {
+      sections.forEach(section => {
+        section.classList.remove('active');
+        if (section.id === id) {
+          section.classList.add('active');
+        }
+      });
+      document.getElementById('projectDropdown').classList.remove('show');
+    }
+    function toggleDropdown() {
+      document.getElementById('projectDropdown').classList.toggle('show');
+    }
+    showSection('home');
+    window.addEventListener('load', () => {
+  const intro = document.getElementById('intro-screen');
+  setTimeout(() => {
+    intro.style.opacity = '0';
+    setTimeout(() => {
+      intro.style.display = 'none';
+    }, 1000); // 페이드아웃 끝난 후 숨김
+  }, 800); // 2.5초 후 시작
+});
+
+  </script>
+ <footer style="
+ background-color: #111;
+ color: #bbb;
+ text-align: center;
+ padding: 2rem 1rem;
+ font-size: 0.85rem;
+ border-top: 1px solid #333;
+ line-height: 1.8;
+">
+ <div style="display: flex; flex-wrap: wrap; justify-content: center; gap: 1rem;">
+   <span>© 2025 Magical</span>
+   <span>📧 comeonjh@gmail.com</span>
+   <span>📍 경기도 김포시</span>
+   <span>사람과 감성을 잇는 콘텐츠 기업</span>
+   <span>
+    <a href="terms.html" target="_blank" style="color: #f9c86c; text-decoration: none;">이용약관</a> |
+    <a href="privacy.html" target="_blank" style="color: #f9c86c; text-decoration: none;">개인정보처리방침</a>
+  </span>
+  
+ </div>
+</footer>
+
+
+
+</body>
+</html>
