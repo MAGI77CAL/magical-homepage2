@@ -63,15 +63,13 @@
       display: flex;
     }
     .section {
-  position: relative;
-  display: none;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
-  padding: 2rem;
-  overflow: hidden;
-}
-
+      position: relative;
+      height: 100vh;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 2rem;
     }
     .section.active {
       display: flex;
@@ -161,80 +159,56 @@
       color: #000;
     }
     @media (max-width: 768px) {
-  .overlay {
-    padding: 6rem 1rem 2rem 1rem; /* 상단 padding을 충분히 확보 */
-    max-width: 90vw;
-    word-break: keep-all;
-    position: relative;
-    z-index: 2;
-  }
-
-  .section video {
-    object-fit: cover;
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    top: 0;
-    left: 0;
-    z-index: 0;
-  }
-
   header {
-    position: relative;
-    z-index: 10; /* 헤더가 항상 최상단에 있도록 */
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  nav {
+    margin-top: 0.5rem;
+    flex-direction: column;
+    gap: 0.5rem;
+    width: 100%;
+  }
+  nav a, nav span {
+    font-size: 1rem;
+  }
+  .overlay {
+    padding: 2rem 1rem;
+  }
+  .overlay h1 {
+    font-size: 1.8rem;
+  }
+  .overlay h2 {
+    font-size: 1.3rem;
+  }
+  .overlay p {
+    font-size: 1rem;
+  }
+  .project-button {
+    width: 100%;
+    margin-bottom: 0.75rem;
+    font-size: 1rem;
+  }
+  .back-button {
+    width: 100%;
+    font-size: 1rem;
+    padding: 0.6rem 1rem;
+  }
+  .project-lines::before,
+  .project-lines::after {
+    display: none;
+  }
+  footer div {
+    flex-direction: column;
+    gap: 0.3rem;
+    font-size: 0.9rem;
   }
 }
 
-      
-      .overlay h1 {
-        font-size: 1.6rem;
-        line-height: 1.4;
-      }
-      .overlay h2 {
-        font-size: 1.2rem;
-        line-height: 1.4;
-      }
-      .overlay p {
-        font-size: 1rem;
-        line-height: 1.6;
-      }
-      header {
-        flex-direction: column;
-        align-items: flex-start;
-      }
-      nav {
-        margin-top: 0.5rem;
-        flex-direction: column;
-        gap: 0.5rem;
-        width: 100%;
-      }
-      nav a, nav span {
-        font-size: 1rem;
-      }
-      .project-button {
-        width: 100%;
-        margin-bottom: 0.75rem;
-        font-size: 1rem;
-      }
-      .back-button {
-        width: 100%;
-        font-size: 1rem;
-        padding: 0.6rem 1rem;
-      }
-      .project-lines::before,
-      .project-lines::after {
-        display: none;
-      }
-      footer div {
-        flex-direction: column;
-        gap: 0.3rem;
-        font-size: 0.9rem;
-      }
-    }
   </style>
 </head>
 <body>
-  <div id="intro-screen" style="
+    <div id="intro-screen" style="
   position: fixed;
   top: 0; left: 0;
   width: 100%; height: 100%;
@@ -284,7 +258,7 @@
     </video>
     <div class="overlay">
       <h1>Magical은</h1>
-      <h2>콘텐츠 그 너머의 가치를 추구하는 기업입니다.</h2>
+      <h2>콘텐츠 그 너머의 가치를 지향하는 기업입니다.</h2>
       <p>우리는 감성, 사람, 그리고 진심을 연결합니다.</p>
       <p class="project-lines">PROJECTS</p>
       <div style="display: flex; justify-content: center; gap: 1rem; flex-wrap: wrap; margin-top: 3rem;">
@@ -364,8 +338,8 @@
     <div class="overlay">
       <h2>📮 문의하기</h2>
       <p>궁금한 점이나 협업 제안이 있다면 언제든지 편하게 연락주세요.</p>
-      <p><strong>이메일</strong>: <a href="mailto:magical2001@naver.com" style="color: #f9c86c;">magical2001@naver.com</a></p>
-      <p><strong>인스타그램 DM</strong>: <a href="https://www.instagram.com/migi77cal" target="_blank" style="color: #f9c86c;">@magi77cal</a></p>
+      <p><strong>이메일</strong>: <a href="mailto:comeonjh@gmail.com" style="color: #f9c86c;">comeonjh@gmail.com</a></p>
+      <p><strong>인스타그램 DM</strong>: <a href="https://www.instagram.com/golden77hand" target="_blank" style="color: #f9c86c;">@golden77hand</a></p>
       <p><strong>위치</strong>: 경기도 김포시 (예시)</p>
       <button class="back-button" onclick="showSection('home')">← 돌아가기</button>
     </div>
@@ -433,6 +407,8 @@
   
  </div>
 </footer>
-  <!-- 여기에 본문 내용이 이어집니다 (section 등) -->
+
+
+
 </body>
 </html>
