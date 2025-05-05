@@ -63,13 +63,15 @@
       display: flex;
     }
     .section {
-      position: relative;
-      height: 100vh;
-      display: none;
-      align-items: center;
-      justify-content: center;
-      text-align: center;
-      padding: 2rem;
+  position: relative;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 2rem;
+  overflow: hidden;
+}
+
     }
     .section.active {
       display: flex;
@@ -159,11 +161,31 @@
       color: #000;
     }
     @media (max-width: 768px) {
-      .overlay {
-        padding: 5rem 1rem 2rem 1rem;
-        max-width: 90vw;
-        word-break: keep-all;
-      }
+  .overlay {
+    padding: 6rem 1rem 2rem 1rem; /* 상단 padding을 충분히 확보 */
+    max-width: 90vw;
+    word-break: keep-all;
+    position: relative;
+    z-index: 2;
+  }
+
+  .section video {
+    object-fit: cover;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    z-index: 0;
+  }
+
+  header {
+    position: relative;
+    z-index: 10; /* 헤더가 항상 최상단에 있도록 */
+  }
+}
+
+      
       .overlay h1 {
         font-size: 1.6rem;
         line-height: 1.4;
